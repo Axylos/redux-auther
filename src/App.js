@@ -5,6 +5,7 @@ import PrivateRoute from './utils/PrivateRoute';
 // import { Home, Auth } from './containers/index';
 import Home from './containers/Home';
 import Auth from './containers/Auth/Auth';
+import { Link } from 'react-router-dom';
 
 const ConnectedSwitch = connect(state => ({
   location: state.location
@@ -12,13 +13,12 @@ const ConnectedSwitch = connect(state => ({
 
 const App = (props) => 
   <div>
-    <pre>({JSON.stringify(props)})</pre>
     <ConnectedSwitch>
-      <PrivateRoute exact path="/" component={Home} />
-      <Route path="/auth" component={Auth} />
+      <PrivateRoute exact path="/" component={Home} location={props.location} />
+      <Route path="/auth" component={Auth} location={props.location} />
     </ConnectedSwitch>
   </div>
 
 export default connect(state => ({
-  location: state.location,
+  location: state.routerReducer.location,
 }))(App);
